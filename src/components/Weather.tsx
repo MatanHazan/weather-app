@@ -11,7 +11,7 @@ const WEATHERAPI_API_KEY = '3998424261db44daba275934241508';
 const fetchWeather = async (city: string) => {
   const cityCoordinatesForMeteo = await getCoordinates(city);
   const [openWeather, weatherApi, openMeteo] = await Promise.all([
-    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${OPENWEATHER_API_KEY}`),
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${OPENWEATHER_API_KEY}`),
     axios.get(`https://api.weatherapi.com/v1/current.json?key=${WEATHERAPI_API_KEY}&q=${city}`),
     axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${cityCoordinatesForMeteo.latitude}&longitude=${cityCoordinatesForMeteo.longitude}&current=temperature_2m`),
   ]);
