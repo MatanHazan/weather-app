@@ -8,6 +8,11 @@ import { useButtonStyles } from '../App';
 const OPENWEATHER_API_KEY = '9a22785104fcaa8daebcb38ac8551f8c';
 const WEATHERAPI_API_KEY = '3998424261db44daba275934241508';
 
+const OPEN_WEATHER_LABEL = 'OpenWeather';
+const WEATHER_API_LABEL = 'WeatherAPI';
+const OPEN_METEO_LABEL = 'Open-Meteo';
+const AVERAGE_LABEL = 'Average Temperature';
+
 const fetchWeather = async (city: string) => {
   const cityCoordinatesForMeteo = await getCoordinates(city);
   const [openWeather, weatherApi, openMeteo] = await Promise.all([
@@ -50,16 +55,20 @@ const Weather: React.FC = () => {
     queryFn: () => fetchWeather(city),
   });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching weather data</div>;
+  if (isLoading) return <div style={textStyle}>Loading...</div>;
+  if (error) return <div style={textStyle}>Error fetching weather data</div>;
+
+  const openWeatherTempC = data?.[0]?.main?.temp && data[0].main.temp;
+  const weatherApiTempC = data?.[1]?.current?.temp_c && data[1].current.temp_c;
+  const openMeteoTempC = data?.[2]?.current?.temperature_2m && data[2].current.temperature_2m;
 
   return (
     <div>
       <div style={textStyle}>
         <h2>Temperature in {city} today:</h2>
-        {data?.[0]?.main?.temp && <p>OpenWeather: {data[0].main.temp}°C</p>}
-        {data?.[1]?.current?.temp_c && <p>WeatherAPI: {data[1].current.temp_c}°C</p>}
-        {data?.[2]?.current?.temperature_2m && <p>Open-Meteo: {data[2].current.temperature_2m}°C</p>}
+        <p>{OPEN_WEATHER_LABEL}: {openWeatherTempC}°C</p>
+        <p>{WEATHER_API_LABEL}: {weatherApiTempC}°C</p>
+        <p>{OPEN_METEO_LABEL}: {openMeteoTempC}°C</p>
       </div>
       <button style={buttonStyle} onClick={() => navigate('/search')}>New Search</button>
     </div>
