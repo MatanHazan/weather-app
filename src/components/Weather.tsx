@@ -11,7 +11,6 @@ const WEATHERAPI_API_KEY = '3998424261db44daba275934241508';
 const OPEN_WEATHER_LABEL = 'OpenWeather';
 const WEATHER_API_LABEL = 'WeatherAPI';
 const OPEN_METEO_LABEL = 'Open-Meteo';
-const AVERAGE_LABEL = 'Average Temperature';
 
 const fetchWeather = async (city: string) => {
   const cityCoordinatesForMeteo = await getCoordinates(city);
